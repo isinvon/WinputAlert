@@ -6,6 +6,11 @@ class BaseConfig:
     基础配置类，用于读取配置文件
     """
     def get_config_path():
+        """ 
+        获取配置文件路径
+        
+        see: https://blog.csdn.net/a772304419/article/details/139993938
+        """
         return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
     
     def __init__(self, config_file=get_config_path()):
