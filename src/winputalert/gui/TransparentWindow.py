@@ -14,7 +14,7 @@ from winputalert.config.animation_config.ShakeAnimationConfig import \
     ShakeAnimationConfig
 from winputalert.config.animation_config.SlideInAnimationConfig import \
     SlideInAnimationConfig
-from winputalert.config.GuiConfig import GUIConfig
+from winputalert.config.GUIConfig import GUIConfig
 
 
 class TransparentWindow(QWidget):
@@ -62,7 +62,7 @@ class TransparentWindow(QWidget):
         base_animation_config = BaseAnimationConfig()
 
         # 设置动画过渡
-        if base_animation_config.is_use_animation():
+        if base_animation_config.get_is_use_animation():
             if base_animation_config.get_animation_type() == "fade_in":
                 # 获取配置
                 fade_in_config = FadeInAnimationConfig()
