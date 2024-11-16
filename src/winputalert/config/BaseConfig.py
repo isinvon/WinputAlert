@@ -31,3 +31,34 @@ class BaseConfig:
             print(f"配置文件 {self.config_file} 未找到")
         except Exception as e:
             print(f"读取配置文件时发生错误: {e}")
+
+    def write_config(self):
+        """
+        将当前配置写入配置文件，指定编码
+        """
+        try:
+            with open(self.config_file, 'w', encoding='utf-8') as file:
+                self.config.write(file)
+        except Exception as e:
+            print(f"写入配置文件时发生错误: {e}")
+
+    def set_option(self, section, option, value):
+        """
+        设置指定节（section）下的选项（option）的值，并更新配置文件
+
+        :param section: 配置文件中的节名，如 [gui]、[keyboard]等
+        :param option: 节内的具体选项名，如width、font_size等
+        :param value: 要设置的新值
+
+        示例用法：
+        
+            # 创建BaseConfig实例
+            config = BaseConfig()
+
+            # 设置 [gui] 节下的width选项的值为150
+            config.set_option('gui', 'width', '150')
+        """
+        if not self.config.has_section(section):
+            self.config.add_section(section)
+        self.config.set(section, option, value)
+        self.write_config()

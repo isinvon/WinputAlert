@@ -13,3 +13,12 @@ class KeyboardConfig(BaseConfig):
         获取键盘检测时间
         """
         return self.config.getint('keyboard', 'keyboard_detect_time_interval', fallback=None)
+
+    def set_keyboard_detect_time_interval(self, value):
+        """
+        设置键盘检测时间
+
+        :param value: 要设置的键盘检测时间值
+        """
+        self.config.set('keyboard', 'keyboard_detect_time_interval', str(value))
+        self.write_config()

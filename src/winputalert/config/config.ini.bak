@@ -1,0 +1,105 @@
+[gui]
+; 大小
+width = 120
+height = 90
+; 字体(例如 Arial)
+font = 黑体
+; 字体大小
+font_size = 50
+; TODO 字体颜色 (0,0,0) 为黑色（还没配置）
+font_color_r = 0
+font_color_g = 0
+font_color_b = 0
+; GUI的位置
+; (左上 - top_left，中上 - top_center，右上 - top_right，正中间 - center，左下 - bottom_left，中下 - bottom_center，右下 - bottom_right, 左中 - left_center，右中 - right_center)
+pos = top_center
+; 背景
+bg_color_r = 60 
+bg_color_g = 63 
+bg_color_b = 65 
+; 不透明度
+opacity = 0.7
+; 边框圆角
+border_radius = 20
+; GUI关闭时间 (默认是2000ms)
+gui_delay_close_time = 1000
+
+; ==============================================================
+
+; 驱动配置（类如键盘检测时间，延迟等等）
+[keyboard]
+; 键盘检测时间 (建议为1ms，不然延迟很高)
+keyboard_detect_time_interval = 1
+
+; ==============================================================
+
+; 动画类型设置
+[animation]
+; 动画过渡（GUI出现的动画过渡）True：使用动画 | False：不使用动画
+is_use_animation = True
+; 动画类型（fade_in - 渐入, bounce - 弹动, shake - 抖动, scale_up - 放大, slide_in - 滑入 等）
+animation_type = fade_in
+; ------------------------------
+; 淡入动画配置
+[animation.fade_in]
+animation_duration_time = 150
+; 起始不透明度
+start_opacity = 0
+; 结束不透明度
+end_opacity = 0.4
+; ------------------------------
+; 回弹动画配置
+[animation.bounce]
+animation_duration_time = 150
+; 起始位置
+start_pos_x = 0
+start_pos_y = 0
+; 中间位置
+mid_pos_x = 75
+mid_pos_y = 50
+; 结束位置
+end_pos_x = 50
+end_pos_y = 50
+; ------------------------------
+; 抖动动画配置
+[animation.shake]
+; 动画持续时间
+animation_duration_time = 150
+; 抖动幅度
+amplitude = 10
+; ------------------------------
+; 缩放动画配置(窗口从大变小)
+[animation.slide_in]
+; 动画持续时间
+animation_duration_time = 150
+; 滑入的方向(right：从左到右，left：从右到左,up：从上到下,down：从下到上)
+direction = up
+; 滑入的幅度(单位是 px，幅度建议默认为 1 观感更好)
+amplitude = 1
+; ------------------------------
+; 缩放动画配置(窗口从小变大)
+[animation.scale_up]
+; 动画持续时间
+animation_duration_time = 150
+
+; ==============================================================
+
+[app_info]
+; 作者
+author = Sinvon
+; 版本
+version = 1.0.0
+; 项目名称
+app_name = WinputAlert
+; 项目官网
+official_website_address = https://gitee.com/sinvon/WinputAlert
+; 项目描述
+app_desc = WinputAlert 是一个基于Python开发能够显示输入状态的GUI界面
+; 文档地址
+project_doc = https://gitee.com/sinvon/WinputAlert
+; 项目地址
+project_link = https://gitee.com/sinvon/WinputAlert
+; 联系支持
+email = 2021469084@qq.com
+; 版权信息
+copyright = 我不造啊, 写着玩的！

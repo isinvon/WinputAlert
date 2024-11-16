@@ -86,3 +86,74 @@ class BounceAnimationConfig(BaseConfig):
         默认值为 50
         """
         return self.config.getint("animation.bounce", "end_pos_y", fallback=50)
+
+    def set_animation_duration_time(self, value):
+        """
+        设置bounce弹跳动画时长
+
+        :param value: int类型的值，表示动画时长（单位为毫秒）
+
+        """
+        self.config.set("animation.bounce", "animation_duration_time", str(value))
+        self.write_config()
+
+    def set_start_pos_x(self, value):
+        """
+        设置bounce弹跳动画起始位置x坐标
+
+        :param value: int类型的值，表示x坐标（单位为像素）
+
+        """
+        self.config.set("ananimation.bounce", "start_pos_x", str(value))
+        self.write_config()
+
+    def set_start_pos_y(self, value):
+        """
+        设置bounce弹跳动画起始位置y坐标
+
+        :param value: int类型的值，表示y坐标（单位为像素）
+
+        """
+        self.config.set("animation.bounce", "start_pos_y", str(value))
+        self.write_config()
+
+    def set_mid_pos_x(self, value):
+        """
+        设置bounce弹跳动画中间位置x坐标
+
+        :param value: int类型的值，表示x坐标（单位为像素）
+
+        """
+        self.config.set("animation.bounce", "mid_pos_x", str(value))
+        self.write_config()
+
+    def set_mid_pos_y(self,
+                    value):
+        """
+        设置bounce弹跳动画中间位置y坐标
+
+        :param value: int类型的值，表示y坐标（单位为像素）
+
+        """
+        self.config.set("animation.bounce", "mid_pos_y", str(value))
+        self.write_config()
+
+    def set_end_pos_x(self, value):
+        """
+        设置bounce弹跳动画结束位置x坐标
+
+        :param value: int类型的值，表示x坐标（单位为像素）
+
+        """
+        self.config.set("animation.bounce", "end_pos_x", str(value))
+        self.write_config()
+
+    def set_end_pos_y(self, value):
+        """
+        设置bounce弹跳动画结束位置y坐标
+
+        :param value: int类型的值，表示y坐标（单位为像素）
+
+        """
+        self.config.set("animation.bounce", "end_pos_y", str(value))
+        self.write_config()

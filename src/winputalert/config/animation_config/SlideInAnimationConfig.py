@@ -41,3 +41,33 @@ class SlideInAnimationConfig(BaseConfig):
         默认值为 1
         """
         return self.config.getint("animation.slide_in", "amplitude", fallback=1)
+
+    def set_animation_duration_time(self, value):
+        """
+        设置slide_in滑入动画时长
+
+        :param value: int类型的值，表示动画时长（单位为毫秒）
+
+        """
+        self.config.set("animation.slide_in", "animation_duration_time", str(value))
+        self.write_config()
+
+    def set_direction(self, value):
+        """
+        设置slide_in滑入方向
+
+        :param value: str类型的值，表示滑入方向（可选值："left", "right", "up", "down"）
+
+        """
+        self.config.set("animation.slide_in", "direction", value)
+        self.write_config()
+
+    def set_amplitude(self, value):
+        """
+        设置slide_in滑入幅度
+
+        :param value: int类型的值，表示滑入幅度（单位为像素）
+
+        """
+        self.config.set("animation.slide_in", "amplitude", str(value))
+        self.write_config()

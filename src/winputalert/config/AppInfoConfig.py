@@ -61,3 +61,85 @@ class AppInfoConfig(BaseConfig):
         获取版权信息
         """
         return self.config.get('app_info', 'copyright', fallback=None)
+
+    def set_app_author(self, value):
+        """
+        设置app的作者
+
+        :param value: 要设置的作者值
+        """
+        self.config.set('app_info', 'author', value)
+        self.write_config()
+
+    def set_app_version(self, value):
+        """
+        设置app的版本
+
+        :param value: 要设置的版本值
+        """
+        self.config.set('app_info', 'version', value)
+        self.write_config()
+
+    def set_app_name(self, value):
+        """
+        设置app的项目名称
+
+        :param value: 要设置的项目名称值
+        """
+        self.config.set('app_info', 'app_name', value)
+        self.write_config()
+
+    def set_official_website_address(self, value):
+        """
+        设置app的项目官网地址
+
+        :param value: 要设置的项目官网地址值
+        """
+        self.config.set('app_info', 'official_website_address', value)
+        self.write_config()
+
+    def set_app_desc(self, value):
+        """
+        设置app的项目描述
+
+        :param value: 要设置的项目描述值
+        """
+        self.config.set('app_info', 'app_desc', value)
+        self.write_config()
+
+    def set_project_doc(self,
+                        value):
+        """
+        设置app的文档地址
+
+        :param value: 要设置的文档地址值
+        """
+        self.config.set('app_info', 'project_doc', value)
+        self.write_config()
+
+    def set_project_link(self, value):
+        """
+        设置app的项目地址
+
+        :param value: 要设置的项目地址值
+        """
+        self.config.set('app_info', 'project_link', value)
+        self.write_config()
+
+    def set_email(self, value):
+        """
+        设置联系支持的邮箱
+
+        :param value: 要设置的邮箱值
+        """
+        self.config.set('app_info', 'email', value)
+        self.write_config()
+
+    def set_copyright(self, value):
+        """
+        设置版权信息
+
+        :param value: 要设置的版权信息值
+        """
+        self.config.set('app_info', 'copyright', value)
+        self.write_config()
