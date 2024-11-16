@@ -72,3 +72,12 @@ python3 main.py
   - 执行了pip uninstall[pyqt5](https://so.csdn.net/so/search?q=pyqt5&spm=1001.2101.3001.7020)和pip3 uninstall pyqt5，再pip3 install pyqt5，然后再试了下pip install pyqt5，就好了。
   - 参考：[报错 No module named ‘PyQt5.QtWidgets‘等_no module named &#39;pyqt5.qtwidgets-CSDN博客](https://blog.csdn.net/qq_39938666/article/details/121895038)
 - .venv 和根目录的名称有关，如果根目录文件夹改名了，需要重建 .venv
+
+# 🚀改进
+
+1. 从PyQt5换成了PySide6（PySide6向下兼容PyQt5）
+2. 使用 Briefcase 构建重构项目，打包可执行文件 msi、exe、dmg、deb等等
+
+# 😡吐槽
+
+Pyinstaller 真 TM 难用！

@@ -1,8 +1,9 @@
-from config.BaseConfig import BaseConfig
+from winputalert.config.BaseConfig import BaseConfig
 
 
 class KeyboardConfig(BaseConfig):
     """ 对键盘的配置类 """
+
     def __init__(self):
         # 调用父类构造函数，config_file 由 BaseConfig 默认值传入
         super().__init__()

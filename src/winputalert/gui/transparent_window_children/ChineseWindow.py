@@ -1,5 +1,5 @@
-from .TransparentWindow import TransparentWindow
-from PyQt5.QtGui import QColor
+from ..TransparentWindow import TransparentWindow
+# from PySide6.QtGui import QColor
 
 class ChineseWindow(TransparentWindow):
     def __init__(self):

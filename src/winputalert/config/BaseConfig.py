@@ -1,6 +1,7 @@
 import configparser
 import os
 
+
 class BaseConfig:
     """
     基础配置类，用于读取配置文件
@@ -8,11 +9,11 @@ class BaseConfig:
     def get_config_path():
         """ 
         获取配置文件路径
-        
+
         see: https://blog.csdn.net/a772304419/article/details/139993938
         """
         return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.ini')
-    
+
     def __init__(self, config_file=get_config_path()):
         """ 
         千万不要用config.ini，因为会找不到，写config/config.ini就可以了,或者./config/config.ini

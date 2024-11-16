@@ -1,4 +1,4 @@
-from config.BaseConfig import BaseConfig
+from winputalert.config.BaseConfig import BaseConfig
 
 
 class GUIConfig(BaseConfig):
@@ -32,11 +32,29 @@ class GUIConfig(BaseConfig):
         """
         return self.config.getint('gui', 'font_size', fallback=None)
 
-    def get_gui_font_color(self):
-        """ 
-        获取GUI的字体颜色
+    # def get_gui_font_color(self):
+    #     """
+    #     获取GUI的字体颜色
+    #     """
+    #     return self.config.get('gui', 'font_color', fallback=None)
+
+    def get_gui_font_color_r(self):
         """
-        return self.config.get('gui', 'font_color', fallback=None)
+        获取GUI的字体颜色的R值
+        """
+        return self.config.getint('gui', 'font_color_r', fallback=None)
+
+    def get_gui_font_color_g(self):
+        """
+        获取GUI的字体颜色的G值
+        """
+        return self.config.getint('gui', 'font_color_g', fallback=None)
+
+    def get_gui_font_color_b(self):
+        """
+        获取GUI的字体颜色的B值
+        """
+        return self.config.getint('gui', 'font_color_b', fallback=None)
 
     def get_gui_pos(self):
         """ 
@@ -55,7 +73,7 @@ class GUIConfig(BaseConfig):
         获取GUI的背景颜色的G值
         """
         return self.config.getint('gui', 'bg_color_g', fallback=None)
-    
+
     def get_bg_color_b(self):
         """
         获取GUI的背景颜色的B值
@@ -74,8 +92,8 @@ class GUIConfig(BaseConfig):
         """
         return self.config.getint('gui', 'border_radius', fallback=None)
 
-    def get_gui_close_time(self):
+    def get_gui_delay_close_time(self):
         """
-        获取GUI关闭时间
+        获取GUI延时关闭时间
         """
-        return self.config.getint("gui", "gui_close_time", fallback=None)
+        return self.config.getint("gui", "gui_delay_close_time", fallback=None)
