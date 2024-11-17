@@ -82,6 +82,28 @@ class DataControlWindow(QWidget):
             "选择背景颜色", self.select_bg_color, self)
         form_layout.addRow("背景颜色 (Background Color):", self.bg_color_button)
 
+        # 保存按钮和重置按钮并列
+        button_layout = QHBoxLayout()  # 创建水平布局
+
+        # 重置按钮
+        self.reset_button = QPushButton("重置设置", self)
+        self.reset_button.setFont(common_font)
+        self.reset_button.setStyleSheet("""
+            QPushButton {
+                background-color: #c0392b;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 8px;
+                font-size: 14px;
+            }
+            QPushButton:hover {
+                background-color: #e74c3c;
+            }
+        """)
+        self.reset_button.clicked.connect(self.reset_configuration)
+        button_layout.addWidget(self.reset_button)  # 将重置按钮添加到水平布局
+
         # 保存按钮
         self.save_button = QPushButton("保存设置", self)
         self.save_button.setFont(common_font)
@@ -100,7 +122,8 @@ class DataControlWindow(QWidget):
         """)
         self.save_button.clicked.connect(self.save_configuration)
         layout.addLayout(form_layout)
-        layout.addWidget(self.save_button)
+        button_layout.addWidget(self.save_button)  # 将重置按钮添加到水平布局
+        layout.addLayout(button_layout)  # 将按钮的水平布局添加到主布局
 
     def center(self):
         """ 窗口居中显示 """
