@@ -59,7 +59,7 @@ class DataControlWindow(QWidget):
         self.font_input.setFont(common_font)
         # self.font_input.setStyleSheet(input_style)
         # 获取系统上所有可用的字体列表
-        families_list = QFontDatabase.families() 
+        families_list = QFontDatabase.families()
         # 向下拉框中添加字体列表
         self.font_input.addItems(families_list)
         form_layout.addRow("字体 (Font):", self.font_input)
