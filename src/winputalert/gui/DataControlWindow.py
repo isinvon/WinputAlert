@@ -272,10 +272,3 @@ class DataControlWindow(QWidget):
         """ 点击关闭按钮时隐藏窗口而不是退出程序 """
         event.ignore()  # 阻止默认关闭事件
         self.hide()  # 隐藏窗口
-
-
-# if __name__ == "__main__":
-#     app = QApplication([])
-#     window = DataControlWindow()
-#     window.show()
-#     app.exec()
