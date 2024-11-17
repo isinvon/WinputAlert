@@ -5,7 +5,7 @@ from PySide6.QtCore import QEvent, QObject, QTimer
 from PySide6.QtWidgets import QApplication
 
 from winputalert.config.GUIConfig import GUIConfig
-from winputalert.config.KeypadConfig import KeyboardConfig
+from winputalert.config.KeyboardConfig import KeyboardConfig
 from winputalert.gui.transparent_window_children.ChineseWindow import ChineseWindow
 from winputalert.gui.transparent_window_children.EnglishWindow import EnglishWindow
 from winputalert.gui.transparent_window_children.LowerCaseWindow import LowerCaseWindow
