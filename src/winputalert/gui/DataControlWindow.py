@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QIcon
 from PySide6.QtWidgets import (QApplication, QCheckBox, QColorDialog,
                                QComboBox, QFormLayout, QHBoxLayout, QLabel,
-                               QLineEdit, QMainWindow, QMessageBox,
+                               QLineEdit, QMainWindow, QMessageBox, QDoubleSpinBox,
                                QPushButton, QVBoxLayout, QWidget)
 
 from winputalert.config.animation_config.BaseAnimationConfig import \
@@ -31,6 +31,18 @@ class DataControlWindow(QWidget):
     """
     数据控制窗口类，支持自定义宽高、字体、颜色等界面属性。
     """
+
+    global gui_config, keyboard_config, system_config, app_info_config, base_animation_config, bounce_animation_config, fade_in_animation_config, scale_up_animation_config, slide_in_animation_config
+
+    gui_config = GUIConfig()
+    keyboard_config = KeyboardConfig()
+    system_config = SystemConfig()
+    app_info_config = AppInfoConfig()
+    base_animation_config = BaseAnimationConfig()
+    bounce_animation_config = BounceAnimationConfig()
+    fade_in_animation_config = FadeInAnimationConfig()
+    scale_up_animation_config = ScaleUpAnimationConfig()
+    slide_in_animation_config = SlideInAnimationConfig()
 
     def __init__(self):
         super().__init__()
@@ -75,62 +87,113 @@ class DataControlWindow(QWidget):
 
         # 宽度设置
         self.width_input = RoundedSpinBox(self)
-        self.width_input.setValue(120)
+        self.width_input.setMinimum(5)  # 设置最小值（假设最小值为 5）
+        self.width_input.setMaximum(1000)  # 设置最大值（假设最大值为 1000）
+        self.width_input.setValue(gui_config.get_gui_width())  # 显示配置中的值
         self.width_input.setFont(common_font)
-        form_layout.addRow("宽度 (Width):", self.width_input)
+        form_layout.addRow("宽度(5-1000):", self.width_input)
 
         # 高度设置
         self.height_input = RoundedSpinBox(self)
-        self.height_input.setValue(90)
+        self.height_input.setMinimum(5)  # 设置最小值（假设最小值为 5）
+        self.height_input.setMaximum(1000)  # 设置最大值（假设最大值为 1000）
+        self.height_input.setValue(gui_config.get_gui_height())  # 显示配置中的值·
         self.height_input.setFont(common_font)
-        form_layout.addRow("高度 (Height):", self.height_input)
+        form_layout.addRow("高度(5-1000):", self.height_input)
 
         # 字体选择
         self.font_input = QComboBox(self)
         self.font_input.setFont(common_font)
         # self.font_input.setStyleSheet(input_style)
-        # 获取系统上所有可用的字体列表
-        families_list = QFontDatabase.families()
-        # 向下拉框中添加字体列表
-        self.font_input.addItems(families_list)
-        form_layout.addRow("字体 (Font):", self.font_input)
+        families_list = QFontDatabase.families()  # 获取系统上所有可用的字体列表
+        self.font_input.addItems(families_list)  # 向下拉框中添加字体列表
+        if gui_config.get_gui_font() in families_list:  # 确保配置中的字体存在于系统字体列表中
+            self.font_input.setCurrentText(gui_config.get_gui_font())  # 设置默认字体
+        form_layout.addRow("字体:", self.font_input)
 
         # 字体大小设置
         self.font_size_input = RoundedSpinBox(self)
-        self.font_size_input.setValue(14)
+        self.font_size_input.setMinimum(1)
+        self.font_size_input.setMaximum(500)
+        self.font_size_input.setValue(
+            gui_config.get_gui_font_size())  # 显示配置中的值
         self.font_size_input.setFont(common_font)
-        form_layout.addRow("字体大小 (Font Size):", self.font_size_input)
+        form_layout.addRow("字体大小(1-500):", self.font_size_input)
 
         # 边框圆角设置
         self.border_radius_input = RoundedSpinBox(self)
-        self.border_radius_input.setValue(20)
+        self.border_radius_input.setMinimum(0)
+        self.border_radius_input.setMaximum(100)
+        self.border_radius_input.setValue(
+            gui_config.get_gui_border_radius())  # 显示配置中的值
         self.border_radius_input.setFont(common_font)
-        form_layout.addRow("边框圆角 (Border Radius):", self.border_radius_input)
+        form_layout.addRow("边框圆角(0-100):", self.border_radius_input)
 
         # 不透明度设置
-        self.opacity_input = RoundedSpinBox(self)
-        self.opacity_input.setRange(0, 100)  # 0% 到 100%
-        self.opacity_input.setValue(70)
+        # 使用 QDoubleSpinBox 代替 RoundedSpinBox
+        self.opacity_input = QDoubleSpinBox(self)
+        self.opacity_input.setRange(0.1, 1.0)  # 范围设置为 0.1 到 1.0
+        self.opacity_input.setSingleStep(0.1)  # 每次步进增加 0.1
+        self.opacity_input.setDecimals(1)  # 显示 1 位小数
+        self.opacity_input.setValue(gui_config.get_gui_opacity())  # 显示配置中的值
         self.opacity_input.setFont(common_font)
-        form_layout.addRow("不透明度 (Opacity):", self.opacity_input)
+        self.opacity_input.setStyleSheet("""
+             QDoubleSpinBox {
+                font-size: 14px;  /* 设置字体大小 */
+                padding: 4px 4px;  /* 内边距 */
+                border: 1px solid #ccc;  /* 边框颜色 */
+                border-radius: 6px;  /* 圆角 */
+            }
+            QDoubleSpinBox::up-button, QDoubleSpinBox::down-button {
+                width: 12px;  /* 调节按钮宽度 */
+                border: none;  /* 去除边框 */
+                border-radius: 4px;  /* 调节按钮圆角 */
+                background-color: #cad6db;  /* 调节按钮背景颜色 */
+                padding: 2px;  /* 内边距 */
+            }
+            QDoubleSpinBox::up-button:hover, QDoubleSpinBox::down-button:hover {
+                background-color: #606669;  /* 鼠标悬停时背景颜色 */
+            }
+            QDoubleSpinBox::up-button:pressed, QDoubleSpinBox::down-button:pressed {
+                background-color: #38749c;  /* 按下时背景颜色 */
+            }
+            QDoubleSpinBox::up-arrow, QDoubleSpinBox::down-arrow {
+                width: 8px;  /* 箭头宽度 */
+                height: 8px;  /* 箭头高度 */
+            }
+        """)
+        form_layout.addRow("不透明度(0-1):", self.opacity_input)
 
-        # GUI位置设置
+        # GUI位置设置 ===================开始===================================
         self.pos_input = QComboBox(self)
         self.pos_input.setFont(common_font)
-        # positions = [
-        #     "top_left", "top_center", "top_right",
-        #     "center", "bottom_left", "bottom_center",
-        #     "bottom_right", "left_center", "right_center"
-        # ]
-        positions = [
-            "左上", "上中", "右上",
-            "左中", "中间", "右中",
-            "左下", "中下", "右下"
-        ]
-        self.pos_input.addItems(positions)
-        form_layout.addRow("位置 (Position):", self.pos_input)
+        # 中英文位置映射
+        positions_map = {
+            "左上": "top_left", "上中": "top_center", "右上": "top_right",
+            "左中": "left_center", "中间": "center", "右中": "right_center",
+            "左下": "bottom_left", "中下": "bottom_center", "右下": "bottom_right"
+        }
+        # 添加选项（中文显示，英文绑定值）
+        self.pos_input.addItems(positions_map.keys())  # 添加中文显示
+        for index, (chinese, english) in enumerate(positions_map.items()):
+            self.pos_input.setItemData(index, english)  # 绑定英文值到每个选项
 
-        # 动画类型设置
+        # 设置默认值为当前配置的英文位置
+        current_position = gui_config.get_gui_pos()
+        if current_position in positions_map.values():
+            self.pos_input.setCurrentIndex(
+                list(positions_map.values()).index(current_position)
+            )
+
+        # 添加信号（响应下拉框选择变化）
+        self.pos_input.currentIndexChanged.connect(
+            lambda: print(f"选中的英文位置：{self.pos_input.currentData()}")
+        )
+
+        form_layout.addRow("位置:", self.pos_input)
+        # GUI位置设置 ===================结束===================================
+
+        # TODO 动画类型设置 (未映射config.ini中的值)
         self.animation_type_input = QComboBox(self)
         self.animation_type_input.setFont(common_font)
         # TODO 建议修改为"淡入","抖动(强)","抖动(中)","抖动(弱)","放大(强)","放大(中)","放大(弱)","滑入(从左向右)","滑入(从右到左)","滑入(从上往下)","滑入(从下往上)",然后他们共用一个动画持续时间
@@ -138,7 +201,7 @@ class DataControlWindow(QWidget):
                       "放大(弱)", "滑入(从左向右)", "滑入(从右到左)", "滑入(从上往下)", "滑入(从下往上)"]
         # animations = ["淡入(fade_in)", "弹动(bounce)", "抖动(shake)", "放大(scale_up)", "滑入(slide_in)"]
         self.animation_type_input.addItems(animations)
-        form_layout.addRow("动画类型 (Animation Type):", self.animation_type_input)
+        form_layout.addRow("动画类型:", self.animation_type_input)
 
         # !!键盘检测时间设置 (不对用户开放修改)
         # self.keyboard_interval_input = RoundedSpinBox(self)
@@ -147,30 +210,76 @@ class DataControlWindow(QWidget):
         # form_layout.addRow("键盘检测间隔 (Keyboard Interval):",
         #                    self.keyboard_interval_input)
 
-        # 开机启动选择（下拉列表样式）
+        # 开机启动选择 ========================开始===============================
         self.is_startup_input = QComboBox(self)
         self.is_startup_input.setFont(common_font)
-        self.is_startup_input.addItems(["是", "否"])
-        self.is_startup_input.setCurrentIndex(0)  # 默认选择是, 返回的是的是索引值，0：是，1：否
-        form_layout.addRow("是否开机启动 (Is Startup):",
-                           self.is_startup_input)  # 开机启动复选框
-        # 开机启动选择（复选框样式）
-        # self.is_startup_checkbox = QCheckBox("开机启动 (Is Startup)", self)
-        # self.is_startup_checkbox.setFont(common_font)
-        # self.is_startup_checkbox.setChecked(True)  # 默认勾选
-        # form_layout.addRow(self.is_startup_checkbox)
+
+        # 中英映射：显示值 -> 数据值
+        start_up_option = {
+            "是": True,
+            "否": False
+        }
+
+        # 添加选项和绑定数据
+        for index, (text, value) in enumerate(start_up_option.items()):
+            self.is_startup_input.addItem(text)
+            self.is_startup_input.setItemData(index, value)  # 绑定数据值
+
+        # 设置默认值
+        current_startup = system_config.get_auto_start_on_system_boot()
+        if current_startup in start_up_option.values():
+            self.is_startup_input.setCurrentIndex(
+                list(start_up_option.values()).index(current_startup)
+            )
+
+        # 添加信号（响应下拉框选择变化）
+        self.is_startup_input.currentIndexChanged.connect(
+            lambda: print(f"选中的位置：{self.is_startup_input.currentData()}")
+        )
+
+        form_layout.addRow("是否开机启动:", self.is_startup_input)
+        # 开机启动选择 ========================结束===============================
 
         # 字体颜色选择
-        self.font_color = QColor(0, 0, 0)  # 初始化颜色, 默认字体颜色（黑色）
-        self.font_color_button = ColorPickerButton(
-            "选择字体颜色", self.select_font_color, self)
-        form_layout.addRow("字体颜色 (Font Color):", self.font_color_button)
+        # self.font_color = QColor(0, 0, 0)  # 初始化颜色, 默认字体颜色（黑色）
+        # self.font_color_button = ColorPickerButton(
+        #     "选择字体颜色", self.select_font_color, self)
+        # form_layout.addRow("字体颜色 (Font Color):", self.font_color_button)
 
-        # 背景颜色选择
-        self.bg_color = QColor(255, 255, 255)  # 初始化颜色，默认背景颜色（白色）
+        # 字体颜色选择 =====================开始====================================
+        gui_config.get_gui_font_color_r()
+
+        # self.font_color = QColor(0, 0, 0)  # 初始化颜色, 默认字体颜色（黑色）
+        self.font_color = QColor(
+            gui_config.get_gui_font_color_r(),
+            gui_config.get_gui_font_color_b(),
+            gui_config.get_gui_font_color_g()
+        )
+        # 创建按钮并设置背景颜色
+        self.font_color_button = ColorPickerButton(
+            "选择字体颜色", self.select_font_color, self
+        )
+        # 设置默认颜色为字体颜色
+        self.update_font_color_button_style()
+        form_layout.addRow("字体颜色:", self.font_color_button)
+        # 字体颜色选择 =====================结束====================================
+
+        # 背景颜色选择======================开始====================================
+        # self.bg_color = QColor(255, 255, 255)  # 初始化颜色，默认背景颜色（白色）
+        self.bg_color = QColor(
+            gui_config.get_bg_color_r(),
+            gui_config.get_bg_color_b(),
+            gui_config.get_bg_color_g()
+        )
         self.bg_color_button = ColorPickerButton(
-            "选择背景颜色", self.select_bg_color, self)
-        form_layout.addRow("背景颜色 (Background Color):", self.bg_color_button)
+            "选择背景颜色", self.select_bg_color, self
+        )
+
+        # 设置默认颜色为背景颜色
+        self.update_bg_color_button_style()
+
+        form_layout.addRow("背景颜色:", self.bg_color_button)
+        # 背景颜色选择======================结束====================================
 
         # 保存按钮和重置按钮并列
         button_layout = QHBoxLayout()  # 创建水平布局
@@ -238,19 +347,62 @@ class DataControlWindow(QWidget):
         """ 
         选择字体颜色
         """
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.font_color = color  # 直接更新 font_color
-            self.font_color_button.update_color(color)  # 更新按钮显示
+        color_dialog = QColorDialog(
+            self.font_color, self)  # 创建颜色选择对话框，初始颜色为当前颜色
+        selected_color = color_dialog.getColor()
+
+        if selected_color.isValid():  # 如果用户选择了有效颜色
+            self.font_color = selected_color
+            self.update_font_color_button_style()
+
+    def update_font_color_button_style(self):
+        """ 
+        更新字体颜色按钮样式
+        """
+        # 判断颜色亮度
+        luminance = (self.font_color.red() * 0.299 +
+                     self.font_color.green() * 0.587 +
+                     self.font_color.blue() * 0.114)
+        font_color_text = "white" if luminance < 128 else "black"  # 根据亮度选择字体颜色
+
+        # 更新按钮样式
+        self.font_color_button.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {self.font_color.name()};  /* 背景色为选择颜色 */
+                color: {font_color_text};  /* 根据亮度设置字体颜色 */
+                border: none;
+                border-radius: 5px;
+                padding: 8px;
+            }}
+        """)
 
     def select_bg_color(self):
         """
         选择背景颜色
         """
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.bg_color = color  # 直接更新 bg_color
-            self.bg_color_button.update_color(color)  # 更新按钮显示
+        color = QColorDialog.getColor(
+            self.bg_color, self)  # 创建颜色选择对话框，初始颜色为当前背景色
+        if color.isValid():  # 如果选择了有效颜色
+            self.bg_color = color  # 更新背景颜色
+            self.update_bg_color_button_style()  # 更新按钮样式
+
+    def update_bg_color_button_style(self):
+        # 判断颜色亮度
+        luminance = (self.bg_color.red() * 0.299 +
+                     self.bg_color.green() * 0.587 +
+                     self.bg_color.blue() * 0.114)
+        font_color_text = "white" if luminance < 128 else "black"  # 根据亮度选择字体颜色
+
+        # 更新按钮样式
+        self.bg_color_button.setStyleSheet(f"""
+            QPushButton {{
+                background-color: {self.bg_color.name()};  /* 背景色为选择颜色 */
+                color: {font_color_text};  /* 根据亮度设置字体颜色 */
+                border: none;
+                border-radius: 5px;
+                padding: 8px;
+            }}
+        """)
 
     def save_configuration(self):
         """
