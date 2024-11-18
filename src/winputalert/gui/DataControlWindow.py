@@ -26,6 +26,7 @@ from winputalert.gui.data_control_window_component.ColorPickerButton import \
     ColorPickerButton
 from winputalert.gui.data_control_window_component.RoundedSpinbox import \
     RoundedSpinBox
+from winputalert.util.ColorUtil import ColorUtil
 
 
 class DataControlWindow(QWidget):
@@ -410,14 +411,78 @@ class DataControlWindow(QWidget):
         保存配置
         """
         config = {
+            # 窗口大小
             "width": self.width_input.value(),
             "height": self.height_input.value(),
+            # 字体
             "font": self.font_input.currentText(),
+            # 字体大小
             "font_size": self.font_size_input.value(),
+            # 字体颜色(保存的格式为Hex，例如：#FF0000)
             "font_color": self.font_color.name(),  # 保存字体颜色的Hex值
+            # 边框圆角
+            "border_radius": self.border_radius_input.value(),
+            # 不透明度
+            "opacity": self.opacity_input.value(),
+            # 位置
+            "pos": self.pos_input.currentData(),
+            # 动画类型
+            "animation_type": self.animation_type_input.currentText(),
+            # 键盘检测时间
+            "keyboard_interval": 1,
+            # 开机启动
+            "is_startup": self.is_startup_input.currentData(),
+            # 背景颜色(保存的格式为Hex，例如：#FF0000
             "bg_color": self.bg_color.name()  # 保存背景颜色的Hex值
         }
-        print("保存的配置:", config)
+        print("保存的配置:", config)  # debug
+
+        # 将配置写入到config.ini文件中
+        gui_config = GUIConfig()
+        # keyboard_config = KeyboardConfig()
+        system_config = SystemConfig()
+        # app_info_config = AppInfoConfig()
+        base_animation_config = BaseAnimationConfig()
+        # bounce_animation_config = BounceAnimationConfig()
+        # fade_in_animation_config = FadeInAnimationConfig()
+        # scale_up_animation_config = ScaleUpAnimationConfig()
+        # slide_in_animation_config = SlideInAnimationConfig()
+
+        try:
+            gui_config.set_gui_width(config["width"])
+            gui_config.set_gui_height(config["height"])
+            gui_config.set_gui_font(config["font"])
+            gui_config.set_gui_font_size(config["font_size"])
+            # 保存颜色配置
+            font_color_r, font_color_g, font_color_b = ColorUtil.hex_to_rgb(
+                config["font_color"]
+            )
+            gui_config.set_gui_font_color_r(font_color_r)
+            gui_config.set_gui_font_color_g(font_color_g)
+            gui_config.set_gui_font_color_b(font_color_b)
+            # 保存圆角配置
+            gui_config.set_gui_border_radius(config["border_radius"])
+            # 保存不透明度配置
+            gui_config.set_gui_opacity(config["opacity"])
+            # 保存位置配置
+            gui_config.set_gui_pos(config["pos"])
+            # 保存动画类型配置
+            base_animation_config.set_animation_type(config["animation_type"])
+            # 保存开机启动配置
+            system_config.set_auto_start_on_system_boot(config["is_startup"])
+            # 保存背景颜色配置
+            bg_color_r, bg_color_g, bg_color_b = ColorUtil.hex_to_rgb(
+                config["bg_color"]
+            )
+            gui_config.set_bg_color_r(bg_color_r)
+            gui_config.set_bg_color_g(bg_color_g)
+            gui_config.set_bg_color_b(bg_color_b)
+
+            # 如果保存成功，弹出提示框
+            QMessageBox.information(self, "保存成功", "配置已成功保存！")
+            return config  # 返回配置，包括颜色
+        except Exception as e:
+            QMessageBox.critical(self, "保存失败", f"保存配置时出错: {e}")
         return config  # 返回配置，包括颜色
 
     def reset_configuration(self):
