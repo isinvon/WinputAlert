@@ -269,8 +269,8 @@ class DataControlWindow(QWidget):
         # self.bg_color = QColor(255, 255, 255)  # 初始化颜色，默认背景颜色（白色）
         self.bg_color = QColor(
             gui_config.get_bg_color_r(),
-            gui_config.get_bg_color_b(),
-            gui_config.get_bg_color_g()
+            gui_config.get_bg_color_g(),
+            gui_config.get_bg_color_b()
         )
         self.bg_color_button = ColorPickerButton(
             "选择背景颜色", self.select_bg_color, self
