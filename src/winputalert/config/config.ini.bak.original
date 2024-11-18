@@ -1,0 +1,63 @@
+[system]
+auto_start_on_system_boot = True
+
+[gui]
+width = 120
+height = 90
+font = 黑体
+font_size = 50
+font_color_r = 0
+font_color_g = 0
+font_color_b = 0
+pos = top_center
+bg_color_r = 60
+bg_color_g = 63
+bg_color_b = 65
+opacity = 0.7
+border_radius = 20
+gui_delay_close_time = 1000
+
+[keyboard]
+keyboard_detect_time_interval = 1
+
+[animation]
+is_use_animation = True
+animation_type = fade_in
+
+[animation.fade_in]
+animation_duration_time = 150
+start_opacity = 0
+end_opacity = 0.4
+
+[animation.bounce]
+animation_duration_time = 150
+start_pos_x = 0
+start_pos_y = 0
+mid_pos_x = 75
+mid_pos_y = 50
+end_pos_x = 50
+end_pos_y = 50
+
+[animation.shake]
+animation_duration_time = 150
+amplitude = 10
+
+[animation.slide_in]
+animation_duration_time = 150
+direction = up
+amplitude = 1
+
+[animation.scale_up]
+animation_duration_time = 150
+
+[app_info]
+author = Sinvon
+version = 1.0.0
+app_name = WinputAlert
+official_website_address = https://gitee.com/sinvon/WinputAlert
+app_desc = WinputAlert 是一个基于Python开发能够显示输入状态的GUI界面
+project_doc = https://gitee.com/sinvon/WinputAlert
+project_link = https://gitee.com/sinvon/WinputAlert
+email = 2021469084@qq.com
+copyright = 我不造啊, 写着玩的！
+
