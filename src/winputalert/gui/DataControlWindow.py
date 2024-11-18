@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QIcon
@@ -418,6 +419,36 @@ class DataControlWindow(QWidget):
         }
         print("保存的配置:", config)
         return config  # 返回配置，包括颜色
+
+    def reset_configuration(self):
+        """
+        重置默认配置
+
+        原理: 将config.ini.bak配置文件覆盖config.ini
+        """
+        # 直接将config.ini.bak.original文件拷贝覆盖config.ini
+        configini_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "..",
+            "config",
+            'config.ini'
+        )
+        # 获取config.ini.bak.original的路径
+        configini_bak_original_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "..",
+            "config",
+            'config.ini.bak.original'
+
+        )
+        try:
+            # 直接将 config.ini.bak.original 文件拷贝覆盖 config.ini
+            shutil.copy(configini_bak_original_path, configini_path)
+            QMessageBox.information(self, "重置成功", "配置已成功重置为默认值！")
+        except FileNotFoundError:
+            QMessageBox.warning(self, "重置失败", "配置文件不存在，无法重置！")
+        except Exception as e:
+            QMessageBox.critical(self, "重置失败", f"重置配置时发生错误: {e}")
 
     # 重写关闭事件（此方法不需要调用，重写之后会自动使用）点击关闭按钮时隐藏窗口而不是退出程序（不然会导致托盘和输入法状态GUI同时被关闭）
     def closeEvent(self, event):
