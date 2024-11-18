@@ -150,7 +150,7 @@ class GUIConfig(BaseConfig):
 
         :param value: 要设置的G值
         """
-        self.config.set('gui', 'image_path', str(value))
+        self.config.set('gui', 'font_color_g', str(value))
         self.write_config()
 
     def set_gui_font_color_b(self, value):
