@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QColorDialog,
                                QLineEdit, QMainWindow, QMessageBox, QDoubleSpinBox,
                                QPushButton, QVBoxLayout, QWidget)
 
+from winputalert.config.BaseConfig import BaseConfig
 from winputalert.config.animation_config.BaseAnimationConfig import \
     BaseAnimationConfig
 from winputalert.config.animation_config.BounceAnimationConfig import \
@@ -35,8 +36,9 @@ class DataControlWindow(QWidget):
     数据控制窗口类，支持自定义宽高、字体、颜色等界面属性。
     """
 
-    global gui_config, keyboard_config, system_config, app_info_config, base_animation_config, bounce_animation_config, fade_in_animation_config, scale_up_animation_config, slide_in_animation_config
+    global base_config, gui_config, keyboard_config, system_config, app_info_config, base_animation_config, bounce_animation_config, fade_in_animation_config, scale_up_animation_config, slide_in_animation_config
 
+    base_config = BaseConfig()
     gui_config = GUIConfig()
     keyboard_config = KeyboardConfig()
     system_config = SystemConfig()
@@ -438,36 +440,37 @@ class DataControlWindow(QWidget):
         }
         print("保存的配置:", config)  # debug
         try:
-            gui_config.set_gui_width(config["width"])
-            gui_config.set_gui_height(config["height"])
-            gui_config.set_gui_font(config["font"])
-            gui_config.set_gui_font_size(config["font_size"])
-            # 保存颜色配置
-            font_color_r, font_color_g, font_color_b = ColorUtil.hex_to_rgb(
-                config["font_color"]
-            )
-            gui_config.set_gui_font_color_r(font_color_r)
-            gui_config.set_gui_font_color_g(font_color_g)
-            gui_config.set_gui_font_color_b(font_color_b)
-            # 保存圆角配置
-            gui_config.set_gui_border_radius(config["border_radius"])
-            # 保存不透明度配置
-            gui_config.set_gui_opacity(config["opacity"])
-            # 保存位置配置
-            gui_config.set_gui_pos(config["pos"])
-            # 保存背景颜色配置
-            bg_color_r, bg_color_g, bg_color_b = ColorUtil.hex_to_rgb(
-                config["bg_color"]
-            )
-            gui_config.set_bg_color_r(bg_color_r)
-            gui_config.set_bg_color_g(bg_color_g)
-            gui_config.set_bg_color_b(bg_color_b)
-            time.sleep(0.05)
-            # # 保存开机启动配置
-            system_config.set_auto_start_on_system_boot(config["is_startup"])
-            time.sleep(0.05)
-            # 保存动画类型配置
-            base_animation_config.set_animation_type(config["animation_type"])
+            # GUI 配置
+            base_config.batch_update_values('gui', {
+                "width": self.width_input.value(),
+                "height": self.height_input.value(),
+                "font": self.font_input.currentText(),
+                "font_size": self.font_size_input.value(),
+                "font_color_r": ColorUtil.hex_to_rgb(self.font_color.name())[0],
+                "font_color_g": ColorUtil.hex_to_rgb(self.font_color.name())[1],
+                "font_color_b": ColorUtil.hex_to_rgb(self.font_color.name())[2],
+                "border_radius": self.border_radius_input.value(),
+                "opacity": self.opacity_input.value(),
+                "pos": self.pos_input.currentData(),
+                "bg_color_r": ColorUtil.hex_to_rgb(self.bg_color.name())[0],
+                "bg_color_g": ColorUtil.hex_to_rgb(self.bg_color.name())[1],
+                "bg_color_b": ColorUtil.hex_to_rgb(self.bg_color.name())[2],
+            })
+
+            # 系统配置
+            base_config.batch_update_values('system', {
+                "auto_start_on_system_boot": self.is_startup_input.currentData(),
+            })
+
+            # 动画配置
+            base_config.batch_update_values('animation', {
+                "animation_type": self.animation_type_input.currentText(),
+            })
+
+            # 键盘配置
+            base_config.batch_update_values('keyboard', {
+                "keyboard_detect_time_interval": 1,  # 固定值
+            })
             # 如果保存成功，弹出提示框
             QMessageBox.information(self, "保存成功", "配置已成功保存！")
             return config  # 返回配置，包括颜色
