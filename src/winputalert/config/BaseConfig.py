@@ -62,3 +62,28 @@ class BaseConfig:
             self.config.add_section(section)
         self.config.set(section, option, value)
         self.write_config()
+
+    def batch_update_values(self, section, values):
+        """
+        批量更新指定节（section）下的多个选项（option）的值，并更新配置文件(允许传入任何类型，最后都将转化为str然后写入ini文件)
+
+        :param section: 配置文件中的节名，如 [gui]、[keyboard]等
+        :param values: 一个字典，包含要更新的选项及其新值
+
+        示例用法：
+        
+            创建BaseConfig实例
+            config = BaseConfig()
+
+            批量更新 [gui] 节下的width和height选项的值
+            values_to_update = {'width': 150, 'height': 100}
+            config.batch_update_values('gui', values_to_update)
+        """
+        if not self.config.has_section(section):
+            self.config.add_section(section)
+
+        for option, value in values.items():
+            # 将所有值转换为字符串
+            self.config.set(section, option, str(value))
+
+        self.write_config()
