@@ -1,5 +1,6 @@
 import os
 import shutil
+import time
 
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QIcon
@@ -436,18 +437,6 @@ class DataControlWindow(QWidget):
             "bg_color": self.bg_color.name()  # 保存背景颜色的Hex值
         }
         print("保存的配置:", config)  # debug
-
-        # 将配置写入到config.ini文件中
-        gui_config = GUIConfig()
-        # keyboard_config = KeyboardConfig()
-        system_config = SystemConfig()
-        # app_info_config = AppInfoConfig()
-        base_animation_config = BaseAnimationConfig()
-        # bounce_animation_config = BounceAnimationConfig()
-        # fade_in_animation_config = FadeInAnimationConfig()
-        # scale_up_animation_config = ScaleUpAnimationConfig()
-        # slide_in_animation_config = SlideInAnimationConfig()
-
         try:
             gui_config.set_gui_width(config["width"])
             gui_config.set_gui_height(config["height"])
@@ -466,10 +455,6 @@ class DataControlWindow(QWidget):
             gui_config.set_gui_opacity(config["opacity"])
             # 保存位置配置
             gui_config.set_gui_pos(config["pos"])
-            # 保存动画类型配置
-            base_animation_config.set_animation_type(config["animation_type"])
-            # 保存开机启动配置
-            system_config.set_auto_start_on_system_boot(config["is_startup"])
             # 保存背景颜色配置
             bg_color_r, bg_color_g, bg_color_b = ColorUtil.hex_to_rgb(
                 config["bg_color"]
@@ -477,7 +462,12 @@ class DataControlWindow(QWidget):
             gui_config.set_bg_color_r(bg_color_r)
             gui_config.set_bg_color_g(bg_color_g)
             gui_config.set_bg_color_b(bg_color_b)
-
+            time.sleep(0.05)
+            # # 保存开机启动配置
+            system_config.set_auto_start_on_system_boot(config["is_startup"])
+            time.sleep(0.05)
+            # 保存动画类型配置
+            base_animation_config.set_animation_type(config["animation_type"])
             # 如果保存成功，弹出提示框
             QMessageBox.information(self, "保存成功", "配置已成功保存！")
             return config  # 返回配置，包括颜色
