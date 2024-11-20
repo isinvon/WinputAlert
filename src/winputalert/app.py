@@ -7,6 +7,7 @@ import sys
 
 from PySide6 import QtWidgets
 
+from winputalert.gui.DataControlWindow import DataControlWindow
 from winputalert.listener.StatusListener import StatusListener
 from winputalert.system_tray.SystemTray import SystemTray
 
@@ -15,6 +16,31 @@ class WinputAlert(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.w_input_alert_ui()
+        # 对config.ini中的开机启动配置读取
+        # 如果用户设置了开启启动为True
+        # 就判断是否系统注册表是否已经存在本项目的开机启动项（计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run）
+        # 如果不存在就创建一个（设置本项目到注册表的开机启动项中）
+        # 如果存在就不做任何操作，直接启动项目即可
+        
+        # 获取应用程序名称
+        app_info = AppInfoConfig()
+        app_name = app_info.get_app_name()
+        
+        # self.set_startup(app_name=app_name)
+        
+        # 创建 DataControlWindow 实例
+        self.data_control_window = DataControlWindow()
+
+        # 创建系统托盘实例
+        self.tray = SystemTray()
+
+        # 连接信号：当托盘图标点击时，显示 DataControlWindow
+        self.tray.show_data_control_window_signal.connect(self.show_data_control_window)
+        
+
+    def show_data_control_window(self):
+        """显示 DataControlWindow"""
+        self.data_control_window.show()
 
     def w_input_alert_ui(self):
         listener = StatusListener()
@@ -40,6 +66,9 @@ def main():
     app = QtWidgets.QApplication(sys.argv)
     # 输入法状态提示界面
     main_window = WinputAlert()
-    # 系统托盘
-    tray = SystemTray()
+    # system_config = SystemConfig()
+    # system_config.set_auto_start_on_system_boot(False)
+    # print("=====================")
+    # print(system_config.get_auto_start_on_system_boot())
+    # print(type(system_config.get_auto_start_on_system_boot()))
     sys.exit(app.exec())

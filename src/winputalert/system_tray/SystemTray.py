@@ -1,6 +1,6 @@
 import os
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import QApplication, QMenu, QMessageBox, QSystemTrayIcon
 
@@ -13,9 +13,12 @@ class SystemTray(QSystemTrayIcon):
     global app_info_config
     app_info_config = AppInfoConfig()
 
-    def __init__(self, parent=None):
+    # 定义信号, 用于触发 DataControlWindow 的显示信号
+    show_data_control_window_signal = Signal()
+
+    def __init__(self, parent=None, main_window=None):
         super().__init__(parent)
-        self.main_window = DataControlWindow()
+        self.main_window = main_window  # 接收主窗口引用
         self.init_tray_icon()
 
     def init_tray_icon(self):
@@ -219,10 +222,8 @@ class SystemTray(QSystemTrayIcon):
     #     help_box.exec()
 
     def show_main_window(self):
-        """显示主窗口"""
-        self.main_window.show()
-        self.main_window.raise_()
-        self.main_window.activateWindow()
+        """通过信号触发显示 DataControlWindow"""
+        self.show_data_control_window_signal.emit()
 
     def quit_application(self):
         """退出应用程序"""
