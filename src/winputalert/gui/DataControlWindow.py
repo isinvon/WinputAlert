@@ -55,7 +55,7 @@ class DataControlWindow(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("WinputAlert")  # 设置窗口标题
+        self.setWindowTitle(app_info_config.get_app_name())  # 设置窗口标题
         # 获取图标的绝对路径
         current_path = os.path.abspath(__file__)
         current_dir = os.path.dirname(current_path)
