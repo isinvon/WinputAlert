@@ -13,7 +13,11 @@ from winputalert.gui.transparent_window_children.UpperCaseWindow import UpperCas
 
 
 class StatusListener(QObject):
-    """ 状态监听器 """
+    """ 
+    状态监听器
+
+    已具备配置热更新特性，无需重启即可生效
+    """
 
     def __init__(self):
         super().__init__()
