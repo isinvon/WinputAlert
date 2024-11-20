@@ -64,6 +64,8 @@ def main():
     metadata = importlib.metadata.metadata(app_module)
     QtWidgets.QApplication.setApplicationName(metadata["Formal-Name"])
     app = QtWidgets.QApplication(sys.argv)
+    # 确保关闭最后一个窗口时应用不会退出
+    app.setQuitOnLastWindowClosed(False)
     # 输入法状态提示界面
     main_window = WinputAlert()
     # system_config = SystemConfig()
