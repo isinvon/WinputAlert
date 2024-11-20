@@ -2,7 +2,7 @@ import os
 import shutil
 import time
 
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QIcon
 from PySide6.QtWidgets import (QApplication, QCheckBox, QColorDialog,
                                QComboBox, QFormLayout, QHBoxLayout, QLabel,
@@ -29,6 +29,7 @@ from winputalert.gui.data_control_window_component.ColorPickerButton import \
 from winputalert.gui.data_control_window_component.RoundedSpinbox import \
     RoundedSpinBox
 from winputalert.util.ColorUtil import ColorUtil
+from winputalert.util.WindowRestartTool import WindowRestartTool
 
 
 class DataControlWindow(QWidget):
@@ -48,6 +49,9 @@ class DataControlWindow(QWidget):
     fade_in_animation_config = FadeInAnimationConfig()
     scale_up_animation_config = ScaleUpAnimationConfig()
     slide_in_animation_config = SlideInAnimationConfig()
+
+    # 定义一个信号，用来通知配置变化
+    config_updated_signal = Signal()
 
     def __init__(self):
         super().__init__()
@@ -502,6 +506,14 @@ class DataControlWindow(QWidget):
         try:
             # 直接将 config.ini.bak.original 文件拷贝覆盖 config.ini
             shutil.copy(configini_bak_original_path, configini_path)
+            
+            # 调用 WindowRestartTool 重启窗口
+            # WindowRestartTool.restart_window(self, lambda new_window: print("窗口已重启")) # debug
+            WindowRestartTool.restart_window(self)
+            
+            # 响应重启信号
+            self.config_updated_signal.emit()
+            
             QMessageBox.information(self, "重置成功", "配置已成功重置为默认值！")
         except FileNotFoundError:
             QMessageBox.warning(self, "重置失败", "配置文件不存在，无法重置！")
