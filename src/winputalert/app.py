@@ -36,12 +36,22 @@ class WinputAlert(QtWidgets.QMainWindow):
 
         # 连接信号：当托盘图标点击时，显示 DataControlWindow
         self.tray.show_data_control_window_signal.connect(self.show_data_control_window)
-        
-
+            
+    # def show_data_control_window(self):
+    #     """显示 DataControlWindow"""
+    #     self.data_control_window.show()
+    
     def show_data_control_window(self):
-        """显示 DataControlWindow"""
+        """显示或重新创建 DataControlWindow"""
+        if not hasattr(self, 'data_control_window') or self.data_control_window is None:
+            self.data_control_window = DataControlWindow()  # 重新创建窗口
         self.data_control_window.show()
-
+        self.data_control_window.destroyed.connect(self.on_data_control_window_destroyed)
+    
+    def on_data_control_window_destroyed(self):
+        """窗口销毁时清理引用"""
+        self.data_control_window = None
+        
     def w_input_alert_ui(self):
         listener = StatusListener()
         # 启动输入法监听
