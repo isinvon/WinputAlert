@@ -178,9 +178,15 @@ class DataControlWindow(QWidget):
         self.pos_input.setFont(common_font)
         # 中英文位置映射
         positions_map = {
-            "左上": "top_left", "上中": "top_center", "右上": "top_right",
-            "左中": "left_center", "中间": "center", "右中": "right_center",
-            "左下": "bottom_left", "中下": "bottom_center", "右下": "bottom_right"
+            "左上": "top_left",
+            "上中": "top_center",
+            "右上": "top_right",
+            "左中": "left_center",
+            # "中间": "center",
+            "右中": "right_center",
+            "左下": "bottom_left",
+            "中下": "bottom_center",
+            "右下": "bottom_right"
         }
         # 添加选项（中文显示，英文绑定值）
         self.pos_input.addItems(positions_map.keys())  # 添加中文显示
