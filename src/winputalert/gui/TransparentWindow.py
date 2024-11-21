@@ -24,11 +24,15 @@ class TransparentWindow(QWidget):
 
     gui_config = GUIConfig()
 
-    def __init__(self, text, color=QColor(gui_config.get_bg_color_r(),  gui_config.get_bg_color_g(), gui_config.get_bg_color_b()), opacity=gui_config.get_gui_opacity()):
+    def __init__(self, text):
 
         super().__init__()
 
         gui_config = GUIConfig()
+        
+        color=QColor(gui_config.get_bg_color_r(),  gui_config.get_bg_color_g(), gui_config.get_bg_color_b())
+        
+        opacity=gui_config.get_gui_opacity()
 
         self.setWindowOpacity(opacity)
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint |  # 增加窗口无边框功能
