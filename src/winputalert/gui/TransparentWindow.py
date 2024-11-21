@@ -201,6 +201,7 @@ class TransparentWindow(QWidget):
         self.animation.setDuration(duration)  # Duration in milliseconds
         self.animation.setStartValue(start_opacity)
         self.animation.setEndValue(end_opacity)
+        # self.animation.setEasingCurve(QEasingCurve.InOutQuad)
         self.animation.start()
 
     # *测试通过
