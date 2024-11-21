@@ -7,9 +7,11 @@ import sys
 
 from PySide6 import QtWidgets
 
+from winputalert.config.SystemConfig import SystemConfig
 from winputalert.gui.DataControlWindow import DataControlWindow
 from winputalert.listener.StatusListener import StatusListener
 from winputalert.system_tray.SystemTray import SystemTray
+from winputalert.util.StartupManageUtil import StartupManageUtil
 
 
 class WinputAlert(QtWidgets.QMainWindow):
@@ -36,6 +38,14 @@ class WinputAlert(QtWidgets.QMainWindow):
 
         # 连接信号：当托盘图标点击时，显示 DataControlWindow
         self.tray.show_data_control_window_signal.connect(self.show_data_control_window)
+        
+        # 对第一次启动进行开机启动判断
+        system_config = SystemConfig()
+        if system_config.get_auto_start_on_system_boot():
+            if not StartupManageUtil.is_startup_enabled(system_wide=False):
+                StartupManageUtil.set_startup(enable=True,system_wide=False)
+        else:
+            StartupManageUtil.set_startup(enable=False,system_wide=False)
             
     # def show_data_control_window(self):
     #     """显示 DataControlWindow"""

@@ -29,6 +29,7 @@ from winputalert.gui.data_control_window_component.ColorPickerButton import \
 from winputalert.gui.data_control_window_component.RoundedSpinbox import \
     RoundedSpinBox
 from winputalert.util.ColorUtil import ColorUtil
+from winputalert.util.StartupManageUtil import StartupManageUtil
 from winputalert.util.WindowRestartTool import WindowRestartTool
 
 
@@ -481,6 +482,23 @@ class DataControlWindow(QWidget):
             base_config.batch_update_values('keyboard', {
                 "keyboard_detect_time_interval": 1,  # 固定值
             })
+
+            # 添加对开机自启动的判断
+            if self.is_startup_input.currentData():
+                # 没有开启开机自启则设置注册表的自启动项
+                if not StartupManageUtil.is_startup_enabled(system_wide=False):
+                    StartupManageUtil.set_startup(
+                        enable=True,
+                        system_wide=False
+                    )
+            else:
+                # 如果选择了不开机启动，检测注册表是否存在自启动项，存在则清除他
+                if StartupManageUtil.is_startup_enabled(system_wide=False):
+                    StartupManageUtil.set_startup(
+                        enable=False,
+                        system_wide=False
+                    )
+
             # 如果保存成功，弹出提示框
             QMessageBox.information(self, "保存成功", "配置已成功保存！")
             return config  # 返回配置，包括颜色
@@ -519,7 +537,24 @@ class DataControlWindow(QWidget):
             
             # 响应重启信号
             self.config_updated_signal.emit()
-            
+
+            # 重置开机启动状态
+            conifg = SystemConfig()
+            if conifg.get_auto_start_on_system_boot():
+                # 检查注册表是否存在此项目的自启动项, 没有启用则启用
+                if not StartupManageUtil.is_startup_enabled(system_wide=False):
+                    StartupManageUtil.set_startup(
+                        enable=True,
+                        system_wide=False
+                    )
+            else:
+                # 如果选择了不开机启动，则关闭开机启动
+                if StartupManageUtil.is_startup_enabled(system_wide=False):
+                    StartupManageUtil.set_startup(
+                        enable=False,
+                        system_wide=False
+                    )
+
             QMessageBox.information(self, "重置成功", "配置已成功重置为默认值！")
         except FileNotFoundError:
             QMessageBox.warning(self, "重置失败", "配置文件不存在，无法重置！")
