@@ -17,19 +17,8 @@ from winputalert.util.StartupManageUtil import StartupManageUtil
 class WinputAlert(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.w_input_alert_ui()
-        # 对config.ini中的开机启动配置读取
-        # 如果用户设置了开启启动为True
-        # 就判断是否系统注册表是否已经存在本项目的开机启动项（计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run）
-        # 如果不存在就创建一个（设置本项目到注册表的开机启动项中）
-        # 如果存在就不做任何操作，直接启动项目即可
-        
-        # 获取应用程序名称
-        app_info = AppInfoConfig()
-        app_name = app_info.get_app_name()
-        
-        # self.set_startup(app_name=app_name)
-        
+        self.w_input_alert_ui()        
+
         # 创建 DataControlWindow 实例
         self.data_control_window = DataControlWindow()
 
