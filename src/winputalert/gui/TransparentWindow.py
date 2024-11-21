@@ -180,16 +180,89 @@ class TransparentWindow(QWidget):
         self.animation.start()
 
     # *测试通过
+    def start_bounce_animation(self, direction="top_left", duration=150, mid_ratio=0.5, edge_offset=25):
+        """
+        弹性/回弹效果动画，支持从不同方向弹入
+        :param direction: 弹入方向，可选值 "top_left", "top_center", "top_right", "left_center",
+                        "right_center", "bottom_left", "bottom_center", "bottom_right"
+        :param duration: 动画持续时间，单位毫秒
+        :param mid_ratio: 中间位置的时间比例，默认 0.5 (动画时间的中点)
+        """
+        # 获取屏幕宽高
+        screen_width = self.screen.width()
+        screen_height = self.screen.height()
 
-    def start_bounce_animation(self, duration=500, start_pos=QPoint(0, 0), mid_pos=QPoint(100, 100), end_pos=QPoint(10, 10)):
-        """弹性/回弹效果动画，模拟窗口弹跳移动"""
+        # 获取窗口宽高
+        config = GUIConfig()
+        widget_width = config.get_gui_width()
+        widget_height = config.get_gui_height()
+
+        # 初始化坐标
+        start_pos = QPoint()
+        mid_pos = QPoint()
+        end_pos = QPoint()
+
+        # 偏移值，控制轨迹的相对弹入效果
+        mid_offset_x = widget_width // 2  # 中间位置的水平偏移
+        mid_offset_y = widget_height // 2  # 中间位置的垂直偏移
+        edge_offset = 25  # 距离屏幕边缘的最终位置偏移
+
+        # 根据方向动态计算位置
+        if direction == "top_left":
+            start_pos = QPoint(0, 0)
+            mid_pos = QPoint(mid_offset_x, mid_offset_y)
+            end_pos = QPoint(edge_offset, edge_offset)
+        elif direction == "top_center":
+            start_pos = QPoint((screen_width - widget_width) // 2, 0)
+            mid_pos = QPoint((screen_width - widget_width) // 2, mid_offset_y)
+            end_pos = QPoint((screen_width - widget_width) // 2, edge_offset)
+        elif direction == "top_right":
+            start_pos = QPoint(screen_width - widget_width, 0)
+            mid_pos = QPoint(screen_width - widget_width -
+                             mid_offset_x, mid_offset_y)
+            end_pos = QPoint(screen_width - widget_width -
+                             edge_offset, edge_offset)
+        elif direction == "left_center":
+            start_pos = QPoint(0, (screen_height - widget_height) // 2)
+            mid_pos = QPoint(
+                mid_offset_x, (screen_height - widget_height) // 2)
+            end_pos = QPoint(edge_offset, (screen_height - widget_height) // 2)
+        elif direction == "right_center":
+            start_pos = QPoint(screen_width - widget_width,
+                               (screen_height - widget_height) // 2)
+            mid_pos = QPoint(screen_width - widget_width -
+                             mid_offset_x, (screen_height - widget_height) // 2)
+            end_pos = QPoint(screen_width - widget_width -
+                             edge_offset, (screen_height - widget_height) // 2)
+        elif direction == "bottom_left":
+            start_pos = QPoint(0, screen_height - widget_height)
+            mid_pos = QPoint(mid_offset_x, screen_height -
+                             widget_height - mid_offset_y)
+            end_pos = QPoint(edge_offset, screen_height -
+                             widget_height - edge_offset)
+        elif direction == "bottom_center":
+            start_pos = QPoint((screen_width - widget_width) //
+                               2, screen_height - widget_height)
+            mid_pos = QPoint((screen_width - widget_width) //
+                             2, screen_height - widget_height - mid_offset_y)
+            end_pos = QPoint((screen_width - widget_width) //
+                             2, screen_height - widget_height - edge_offset)
+        elif direction == "bottom_right":
+            start_pos = QPoint(screen_width - widget_width,
+                               screen_height - widget_height)
+            mid_pos = QPoint(screen_width - widget_width - mid_offset_x,
+                             screen_height - widget_height - mid_offset_y)
+            end_pos = QPoint(screen_width - widget_width - edge_offset,
+                             screen_height - widget_height - edge_offset)
+        else:
+            raise ValueError(f"未知方向: {direction}")
+
+        # 创建弹性动画
         self.animation = QPropertyAnimation(self, b"pos")
-        self.animation.setDuration(duration)  # 动画持续时间
-        self.animation.setStartValue(start_pos)  # 起始位置
-        # self.animation.setKeyValueAt(0.2, mid_pos)  # 中间位置
-        # 可继续添加...
-        self.animation.setKeyValueAt(0.5, mid_pos)  # 中间位置
-        self.animation.setEndValue(end_pos)  # 目标位置
+        self.animation.setDuration(duration)
+        self.animation.setStartValue(start_pos)
+        self.animation.setKeyValueAt(mid_ratio, mid_pos)
+        self.animation.setEndValue(end_pos)
         self.animation.setEasingCurve(QEasingCurve.OutBounce)
         self.animation.start()
 
