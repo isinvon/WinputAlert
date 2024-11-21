@@ -549,11 +549,11 @@ class DataControlWindow(QWidget):
         try:
             # 直接将 config.ini.bak.original 文件拷贝覆盖 config.ini
             shutil.copy(configini_bak_original_path, configini_path)
-            
+
             # 调用 WindowRestartTool 重启窗口
             # WindowRestartTool.restart_window(self, lambda new_window: print("窗口已重启")) # debug
             WindowRestartTool.restart_window(self)
-            
+
             # 响应重启信号
             self.config_updated_signal.emit()
 

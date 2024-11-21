@@ -61,62 +61,86 @@ class TransparentWindow(QWidget):
 
         base_animation_config = BaseAnimationConfig()
 
-        # 设置动画过渡
         if base_animation_config.get_is_use_animation():
+            # 淡入
             if base_animation_config.get_animation_type() == "fade_in":
-                # 获取配置
                 fade_in_config = FadeInAnimationConfig()
+                gui_config = GUIConfig()
                 duration = fade_in_config.get_animation_duration_time()
-                start_opacity = fade_in_config.get_start_opacity()
-                end_opacity = fade_in_config.get_end_opacity()
-                #  淡入动画
                 self.start_fade_in_animation(
-                    duration=duration, start_opacity=start_opacity, end_opacity=end_opacity)
-
+                    duration=duration, end_opacity=gui_config.get_gui_opacity())
+            # 弹性 (由位置改变出场方式)
             elif base_animation_config.get_animation_type() == "bounce":
-                # 获取配置
                 bounce_config = BounceAnimationConfig()
-                duration = bounce_config.get_animation_duration_time()
-                start_pos_x = bounce_config.get_start_pos_x()
-                start_pos_y = bounce_config.get_start_pos_y()
-                mid_pos_x = bounce_config.get_mid_pos_x()
-                mid_pos_y = bounce_config.get_mid_pos_y()
-                end_pos_x = bounce_config.get_end_pos_x()
-                end_pos_y = bounce_config.get_end_pos_y()
-                #  弹性动画
-                self.start_bounce_animation(duration=duration, start_pos=QPoint(
-                    start_pos_x, start_pos_y), mid_pos=QPoint(mid_pos_x, mid_pos_y), end_pos=QPoint(end_pos_x, end_pos_y))
-
-            elif base_animation_config.get_animation_type() == "shake":
-                # 获取配置
+                gui_pos = GUIConfig().get_gui_pos()
+                edge_offset = 25  # 距离屏幕边缘的偏移量
+                self.start_bounce_animation(
+                    direction=gui_pos,
+                    duration=bounce_config.get_animation_duration_time(),
+                    edge_offset=edge_offset
+                )
+            # 抖动（强）
+            elif base_animation_config.get_animation_type() == "shake.strong":
                 shake_config = ShakeAnimationConfig()
                 duration = shake_config.get_animation_duration_time()
-                amplitude = shake_config.get_amplitude()
-                # 抖动
+                amplitude = shake_config.get_amplitude(intensity="strong")
                 self.start_shake_animation(
                     duration=duration, amplitude=amplitude)
-
-            elif base_animation_config.get_animation_type() == "slide_in":
-                # 获取配置
-                slide_in_config = SlideInAnimationConfig()
-                duration = slide_in_config.get_animation_duration_time()
-                direction = slide_in_config.get_direction()
-                amplitude = slide_in_config.get_amplitude()
-                # 缩小
-                self.start_slide_in_animation(
-                    duration=duration, direction=direction, amplitude=amplitude)
-
+            # 抖动 （中）
+            elif base_animation_config.get_animation_type() == "shake.medium":
+                shake_config = ShakeAnimationConfig()
+                duration = shake_config.get_animation_duration_time()
+                amplitude = shake_config.get_amplitude(intensity="medium")
+                self.start_shake_animation(
+                    duration=duration, amplitude=amplitude)
+            # 抖动（弱）
+            elif base_animation_config.get_animation_type() == "shake.weak":
+                shake_config = ShakeAnimationConfig()
+                duration = shake_config.get_animation_duration_time()
+                amplitude = shake_config.get_amplitude(intensity="weak")
+                self.start_shake_animation(
+                    duration=duration, amplitude=amplitude)
+            # 放大
             elif base_animation_config.get_animation_type() == "scale_up":
-                # 获取配置
                 scale_up_config = ScaleUpAnimationConfig()
                 duration = scale_up_config.get_animation_duration_time()
-                # 放大
-                self.start_scale_up_animation(duration=duration)
+                self.start_scale_up_animation(
+                    duration=duration)
+            # 滑入(从上往下)
+            elif base_animation_config.get_animation_type() == "slide_in.up":
+                slide_in_config = SlideInAnimationConfig()
+                duration = slide_in_config.get_animation_duration_time()
+                direction = slide_in_config.get_direction(direction="up")
+                amplitude = slide_in_config.get_amplitude()
+                self.start_slide_in_animation(
+                    duration=duration, direction=direction, amplitude=amplitude)
+            # 滑入（从下往上）
+            elif base_animation_config.get_animation_type() == "slide_in.down":
+                slide_in_config = SlideInAnimationConfig()
+                duration = slide_in_config.get_animation_duration_time()
+                direction = slide_in_config.get_direction(direction="down")
+                amplitude = slide_in_config.get_amplitude()
+                self.start_slide_in_animation(
+                    duration=duration, direction=direction, amplitude=amplitude)
+            # 滑入（从左往右）
+            elif base_animation_config.get_animation_type() == "slide_in.left":
+                slide_in_config = SlideInAnimationConfig()
+                duration = slide_in_config.get_animation_duration_time()
+                direction = slide_in_config.get_direction(direction="left")
+                amplitude = slide_in_config.get_amplitude()
+                self.start_slide_in_animation(
+                    duration=duration, direction=direction, amplitude=amplitude)
+            # 滑入（从右往左）
+            elif base_animation_config.get_animation_type() == "slide_in.right":
+                slide_in_config = SlideInAnimationConfig()
+                duration = slide_in_config.get_animation_duration_time()
+                direction = slide_in_config.get_direction(direction="right")
+                amplitude = slide_in_config.get_amplitude()
+                self.start_slide_in_animation(
+                    duration=duration, direction=direction, amplitude=amplitude)
             else:
                 # 默认使用淡入动画
                 self.start_fade_in_animation()
-        else:
-            pass
 
     def paintEvent(self, event):
         painter = QPainter(self)
