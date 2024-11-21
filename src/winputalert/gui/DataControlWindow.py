@@ -209,15 +209,34 @@ class DataControlWindow(QWidget):
         form_layout.addRow("位置:", self.pos_input)
         # GUI位置设置 ===================结束===================================
 
-        # TODO 动画类型设置 (未映射config.ini中的值)
+        # 动画类型设置 ===================开始===================================
         self.animation_type_input = QComboBox(self)
         self.animation_type_input.setFont(common_font)
-        # TODO 建议修改为"淡入","抖动(强)","抖动(中)","抖动(弱)","放大(强)","放大(中)","放大(弱)","滑入(从左向右)","滑入(从右到左)","滑入(从上往下)","滑入(从下往上)",然后他们共用一个动画持续时间
-        animations = ["淡入", "抖动(强)", "抖动(中)", "抖动(弱)", "放大(强)", "放大(中)",
-                      "放大(弱)", "滑入(从左向右)", "滑入(从右到左)", "滑入(从上往下)", "滑入(从下往上)"]
-        # animations = ["淡入(fade_in)", "弹动(bounce)", "抖动(shake)", "放大(scale_up)", "滑入(slide_in)"]
-        self.animation_type_input.addItems(animations)
+        animations_map = {
+            "淡入":"fade_in", 
+            "抖动(强)":"shake.strong",
+            "抖动(中)":"shake.medium",
+            "抖动(弱)":"shake.weak", 
+            "放大":"scale_up",
+            "滑入(从左向右)":"slide_in.left", 
+            "滑入(从右到左)":"slide_in.right", 
+            "滑入(从上往下)":"slide_in.up", 
+            "滑入(从下往上)":"slide_in.down",
+            "弹动(由位置改变出场)":"bounce",
+        }
+        # 添加选项（中文显示，英文绑定值）
+        self.animation_type_input.addItems(animations_map.keys())  # 添加中文显示
+        for index, (chinese, english) in enumerate(animations_map.items()):
+            self.animation_type_input.setItemData(index, english)  # 绑定英文值到每个选项
+
+        # 设置默认值为当前配置的英文位置
+        animation_type = base_animation_config.get_animation_type()
+        if animation_type in animations_map.values():
+            self.animation_type_input.setCurrentIndex(
+                list(animations_map.values()).index(animation_type)
+            )
         form_layout.addRow("动画类型:", self.animation_type_input)
+        # 动画类型设置 ===================结束===================================
 
         # !!键盘检测时间设置 (不对用户开放修改)
         # self.keyboard_interval_input = RoundedSpinBox(self)
@@ -475,7 +494,7 @@ class DataControlWindow(QWidget):
 
             # 动画配置
             base_config.batch_update_values('animation', {
-                "animation_type": self.animation_type_input.currentText(),
+                "animation_type": self.animation_type_input.currentData(),
             })
 
             # 键盘配置
