@@ -1,12 +1,11 @@
 import os
 import shutil
-import time
 
-from PySide6.QtCore import Qt, QTimer, Signal
+from PySide6.QtCore import  Signal
 from PySide6.QtGui import QColor, QFont, QFontDatabase, QIcon
-from PySide6.QtWidgets import (QApplication, QCheckBox, QColorDialog,
-                               QComboBox, QFormLayout, QHBoxLayout, QLabel,
-                               QLineEdit, QMainWindow, QMessageBox, QDoubleSpinBox,
+from PySide6.QtWidgets import (QApplication, QColorDialog,
+                               QComboBox, QFormLayout, QHBoxLayout, 
+                               QMessageBox, QDoubleSpinBox,
                                QPushButton, QVBoxLayout, QWidget)
 
 from winputalert.config.BaseConfig import BaseConfig

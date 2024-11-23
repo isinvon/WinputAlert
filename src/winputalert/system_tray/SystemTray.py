@@ -5,7 +5,6 @@ from PySide6.QtGui import QAction, QIcon
 from PySide6.QtWidgets import QApplication, QMenu, QMessageBox, QSystemTrayIcon
 
 from winputalert.config.AppInfoConfig import AppInfoConfig
-from winputalert.gui.DataControlWindow import DataControlWindow
 
 
 class SystemTray(QSystemTrayIcon):
