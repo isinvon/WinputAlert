@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QColorDialog,
                                QPushButton, QVBoxLayout, QWidget)
 
 from winputalert.config.BaseConfig import BaseConfig
+from winputalert.config.ConfigFileManager import ConfigFileManager
 from winputalert.config.animation_config.BaseAnimationConfig import \
     BaseAnimationConfig
 from winputalert.config.animation_config.BounceAnimationConfig import \
@@ -532,20 +533,22 @@ class DataControlWindow(QWidget):
         原理: 将config.ini.bak配置文件覆盖config.ini
         """
         # 直接将config.ini.bak.original文件拷贝覆盖config.ini
-        configini_path = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            "..",
-            "config",
-            'config.ini'
-        )
-        # 获取config.ini.bak.original的路径
-        configini_bak_original_path = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)),
-            "..",
-            "config",
-            'config.ini.bak.original'
-
-        )
+        # configini_path = os.path.join(
+        #     os.path.dirname(os.path.abspath(__file__)),
+        #     "..",
+        #     "config",
+        #     'config.ini'
+        # )
+        # # 获取config.ini.bak.original的路径
+        # configini_bak_original_path = os.path.join(
+        #     os.path.dirname(os.path.abspath(__file__)),
+        #     "..",
+        #     "config",
+        #     'config.ini.bak.original'
+        # )
+        configmanager = ConfigFileManager()
+        configini_path = configmanager.get_config_file_paths()['config_ini']
+        configini_bak_original_path = configmanager.get_config_file_paths()['config_ini_bak']
         try:
             # 直接将 config.ini.bak.original 文件拷贝覆盖 config.ini
             shutil.copy(configini_bak_original_path, configini_path)
