@@ -23,7 +23,15 @@ test_sources = [
 requires = [
     "PySide6-Essentials~=6.7",
     # "PySide6-Addons~=6.7",
-    "keyboard~=0.13.5"
+    "keyboard~=0.13.5",
+    "psutil==6.1.0",
+    "PySide6==6.8.0.2",
+    # "PySide6-stubs==6.4.2.0",
+    "PySide6_Addons==6.8.0.2",
+    "PySide6_Essentials==6.8.0.2",
+    # "pywin32==308",
+    "briefcase==0.3.20",
+    "keyboard==0.13.5",
 ]
 test_requires = [
     "pytest",
