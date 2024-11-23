@@ -285,22 +285,24 @@ class TransparentWindow(QWidget):
 
     # *测试通过
     def start_shake_animation(self, duration=150, amplitude=10):
-        """窗口抖动效果"""
+        """窗口抖动效果(丝滑版)"""
+        current_pos = self.pos()  # 获取当前窗口位置
+
+        # 创建动画
         self.animation = QPropertyAnimation(self, b"pos")
         self.animation.setDuration(duration)
-        self.animation.setStartValue(self.pos())
-        # 设置多次位置偏移来模拟抖动效果
-        self.animation.setKeyValueAt(0.1, QPoint(
-            self.x() + amplitude, self.y()))
-        self.animation.setKeyValueAt(0.2, QPoint(
-            self.x() - amplitude, self.y()))
-        self.animation.setKeyValueAt(0.3, QPoint(
-            self.x() + amplitude, self.y()))
-        self.animation.setKeyValueAt(0.4, QPoint(
-            self.x() - amplitude, self.y()))
-        self.animation.setKeyValueAt(0.5, self.pos())  # 最后回到原位置
-        self.animation.setEndValue(self.pos())  # 最终回到原位置(添加结束值)
-        self.animation.setEasingCurve(QEasingCurve.Linear)
+        self.animation.setLoopCount(3)
+
+        # 定义抖动路径
+        self.animation.setKeyValueAt(0, current_pos)
+        self.animation.setKeyValueAt(0.25, QPoint(
+            current_pos.x() + amplitude, current_pos.y()))
+        self.animation.setKeyValueAt(0.5, current_pos)
+        self.animation.setKeyValueAt(0.75, QPoint(
+            current_pos.x() - amplitude, current_pos.y()))
+        self.animation.setKeyValueAt(1, current_pos)
+
+        # 启动动画
         self.animation.start()
 
     # *测试通过
