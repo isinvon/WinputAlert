@@ -30,7 +30,7 @@ requires = [
     "PySide6_Addons==6.8.0.2",
     "PySide6_Essentials==6.8.0.2",
     "pywin32==308",
-    # "briefcase==0.3.20",
+    "briefcase==0.3.20",
     "keyboard==0.13.5",
 ]
 test_requires = [
