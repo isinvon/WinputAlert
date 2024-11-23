@@ -247,42 +247,28 @@ class TransparentWindow(QWidget):
             end_pos = QPoint((screen_width - widget_width) // 2, edge_offset)
         elif direction == "top_right":
             start_pos = QPoint(screen_width - widget_width, 0)
-            mid_pos = QPoint(screen_width - widget_width -
-                             mid_offset_x, mid_offset_y)
-            end_pos = QPoint(screen_width - widget_width -
-                             edge_offset, edge_offset)
+            mid_pos = QPoint(screen_width - widget_width - mid_offset_x, mid_offset_y)
+            end_pos = QPoint(screen_width - widget_width - edge_offset, edge_offset)
         elif direction == "left_center":
             start_pos = QPoint(0, (screen_height - widget_height) // 2)
-            mid_pos = QPoint(
-                mid_offset_x, (screen_height - widget_height) // 2)
+            mid_pos = QPoint(mid_offset_x, (screen_height - widget_height) // 2)
             end_pos = QPoint(edge_offset, (screen_height - widget_height) // 2)
         elif direction == "right_center":
-            start_pos = QPoint(screen_width - widget_width,
-                               (screen_height - widget_height) // 2)
-            mid_pos = QPoint(screen_width - widget_width -
-                             mid_offset_x, (screen_height - widget_height) // 2)
-            end_pos = QPoint(screen_width - widget_width -
-                             edge_offset, (screen_height - widget_height) // 2)
+            start_pos = QPoint(screen_width - widget_width, (screen_height - widget_height) // 2)
+            mid_pos = QPoint(screen_width - widget_width - mid_offset_x, (screen_height - widget_height) // 2)
+            end_pos = QPoint(screen_width - widget_width - edge_offset, (screen_height - widget_height) // 2)
         elif direction == "bottom_left":
             start_pos = QPoint(0, screen_height - widget_height)
-            mid_pos = QPoint(mid_offset_x, screen_height -
-                             widget_height - mid_offset_y)
-            end_pos = QPoint(edge_offset, screen_height -
-                             widget_height - edge_offset)
+            mid_pos = QPoint(mid_offset_x, screen_height - widget_height - mid_offset_y)
+            end_pos = QPoint(edge_offset, screen_height - widget_height - edge_offset)
         elif direction == "bottom_center":
-            start_pos = QPoint((screen_width - widget_width) //
-                               2, screen_height - widget_height)
-            mid_pos = QPoint((screen_width - widget_width) //
-                             2, screen_height - widget_height - mid_offset_y)
-            end_pos = QPoint((screen_width - widget_width) //
-                             2, screen_height - widget_height - edge_offset)
+            start_pos = QPoint((screen_width - widget_width) // 2, screen_height - widget_height)
+            mid_pos = QPoint((screen_width - widget_width) // 2, screen_height - widget_height - mid_offset_y)
+            end_pos = QPoint((screen_width - widget_width) // 2, screen_height - widget_height - edge_offset)
         elif direction == "bottom_right":
-            start_pos = QPoint(screen_width - widget_width,
-                               screen_height - widget_height)
-            mid_pos = QPoint(screen_width - widget_width - mid_offset_x,
-                             screen_height - widget_height - mid_offset_y)
-            end_pos = QPoint(screen_width - widget_width - edge_offset,
-                             screen_height - widget_height - edge_offset)
+            start_pos = QPoint(screen_width - widget_width, screen_height - widget_height)
+            mid_pos = QPoint(screen_width - widget_width - mid_offset_x, screen_height - widget_height - mid_offset_y)
+            end_pos = QPoint(screen_width - widget_width - edge_offset, screen_height - widget_height - edge_offset)
         else:
             raise ValueError(f"未知方向: {direction}")
 
@@ -292,7 +278,9 @@ class TransparentWindow(QWidget):
         self.animation.setStartValue(start_pos)
         self.animation.setKeyValueAt(mid_ratio, mid_pos)
         self.animation.setEndValue(end_pos)
-        self.animation.setEasingCurve(QEasingCurve.OutBounce)
+        
+        # 使用更平滑的缓动函数，例如 InOutQuad
+        self.animation.setEasingCurve(QEasingCurve.InOutQuad)  # 可以根据需要选择更柔和的曲线
         self.animation.start()
 
     # *测试通过
