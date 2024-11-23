@@ -2,7 +2,7 @@
 [tool.briefcase]
 project_name = "WinputAlert"
 bundle = "com.sinvon"
-version = "0.0.1"
+version = "1.0.0"
 url = "https://www.example.com"
 license.file = "LICENSE"
 author = "sinvon"
