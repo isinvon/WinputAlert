@@ -182,9 +182,9 @@ class DataControlWindow(QWidget):
             "左上": "top_left",
             "上中": "top_center",
             "右上": "top_right",
-            "左中": "left_center",
+            "左中": "center_left",
             # "中间": "center",
-            "右中": "right_center",
+            "右中": "center_right",
             "左下": "bottom_left",
             "中下": "bottom_center",
             "右下": "bottom_right"

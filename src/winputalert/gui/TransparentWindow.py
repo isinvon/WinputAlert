@@ -1,4 +1,4 @@
-from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, QRectF, Qt
+from PySide6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, QRectF, Qt, QTimer
 from PySide6.QtGui import QColor, QPainter, QPainterPath, QRegion
 from PySide6.QtWidgets import QApplication, QLabel, QWidget
 
@@ -169,26 +169,26 @@ class TransparentWindow(QWidget):
         margin_x = self.screen.width() // 100
         margin_y = self.screen.height() // 100
 
-        if position == "left_top":
+        if position == "top_left":
             x, y = margin_x, margin_y
         elif position == "top_center":
             x, y = (self.screen.width() - self.window_width) // 2, margin_y
-        elif position == "right_top":
+        elif position == "top_right":
             x, y = self.screen.width() - self.window_width - margin_x, margin_y
-        elif position == "left_center":
+        elif position == "center_left":
             x, y = margin_x, (self.screen.height() - self.window_height) // 2
         elif position == "center":
             x, y = (self.screen.width(
             ) - self.window_width) // 2, (self.screen.height() - self.window_height) // 2
-        elif position == "right_center":
+        elif position == "center_right":
             x, y = self.screen.width() - self.window_width - \
                 margin_x, (self.screen.height() - self.window_height) // 2
-        elif position == "left_bottom":
+        elif position == "bottom_left":
             x, y = margin_x, self.screen.height() - self.window_height - margin_y
         elif position == "bottom_center":
             x, y = (self.screen.width(
             ) - self.window_width) // 2, self.screen.height() - self.window_height - margin_y
-        elif position == "right_bottom":
+        elif position == "bottom_right":
             x, y = self.screen.width() - self.window_width - \
                 margin_x, self.screen.height() - self.window_height - margin_y
         else:
@@ -408,12 +408,3 @@ class TransparentWindow(QWidget):
         self.animation.setEndValue(end_rect)
         self.animation.setEasingCurve(QEasingCurve.OutQuad)
         self.animation.start()
-
-    # !!测试不通过
-    # def start_change_color_animation(self, start_color=QColor(255, 0, 0), end_color=QColor(0, 255, 0), duration=150):
-    #     """改变背景颜色动画"""
-    #     color_animation = QPropertyAnimation(self, b"color")
-    #     color_animation.setDuration(duration)
-    #     color_animation.setStartValue(start_color)
-    #     color_animation.setEndValue(end_color)
-    #     color_animation.start()
