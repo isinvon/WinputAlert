@@ -7,6 +7,7 @@ import sys
 
 from PySide6 import QtWidgets
 
+from winputalert.config.ConfigFileManager import ConfigFileManager
 from winputalert.config.SystemConfig import SystemConfig
 from winputalert.gui.DataControlWindow import DataControlWindow
 from winputalert.listener.StatusListener import StatusListener
@@ -58,6 +59,9 @@ class WinputAlert(QtWidgets.QMainWindow):
 
 
 def main():
+    # 拷贝配置文件到用户数据目录下
+    config_file_manager = ConfigFileManager()
+    config_file_manager.initialize_user_config()
     # Linux desktop environments use an app's .desktop file to integrate the app
     # in to their application menus. The .desktop file of this app will include
     # the StartupWMClass key, set to app's formal name. This helps associate the
