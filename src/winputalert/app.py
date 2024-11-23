@@ -81,9 +81,4 @@ def main():
     app.setQuitOnLastWindowClosed(False)
     # 输入法状态提示界面
     main_window = WinputAlert()
-    # system_config = SystemConfig()
-    # system_config.set_auto_start_on_system_boot(False)
-    # print("=====================")
-    # print(system_config.get_auto_start_on_system_boot())
-    # print(type(system_config.get_auto_start_on_system_boot()))
     sys.exit(app.exec())
