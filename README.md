@@ -1,4 +1,3 @@
-# 🎁简介
 <div align="center">
   <img src="./image/README/WinputAlert.png" alt="Clash" width="128" />
 </div>
@@ -9,20 +8,20 @@ WinputAlert 是一款基于 Python 开发的输入法状态切换提示的GUI应
 # 🎈展示
 <div>
   <div align="center" style="display: flex; justify-content: center; gap: 10px;">
-    <img src="./image/README/渐变.gif" alt="Clash" width="500" />
-    <img src="./image/README/弹动.gif" alt="Clash" width="500" />
+    <img src="./image/README/渐变.gif" alt="Clash" width="250" />
+    <img src="./image/README/弹动.gif" alt="Clash" width="250" />
   </div>
   <div align="center" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-    <img src="./image/README/抖动.gif" alt="Clash" width="500" />
-    <img src="./image/README/放大.gif" alt="Clash" width="500" />
+    <img src="./image/README/抖动.gif" alt="Clash" width="250" />
+    <img src="./image/README/放大.gif" alt="Clash" width="250" />
   </div>
   <div align="center" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-    <img src="./image/README/滑入.gif" alt="Clash" width="500" />
-    <img src="./image/README/滑入_从下往上.gif" alt="Clash" width="500" />
+    <img src="./image/README/滑入.gif" alt="Clash" width="250" />
+    <img src="./image/README/滑入_从下往上.gif" alt="Clash" width="250" />
   </div>
   <div align="center" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-    <img src="./image/README/托盘.png" alt="Clash" width="500" />
-    <img src="./image/README/设置界面.png" alt="Clash" width="500" />
+    <img src="./image/README/托盘.png" alt="Clash" width="250" />
+    <img src="./image/README/设置界面.png" alt="Clash" width="250" />
   </div>
 </div>
 
@@ -100,5 +99,5 @@ git clone 源代码到本地
 1. 从PyQt5换成了PySide6（PySide6部分组件向下兼容PyQt5）
 2. 使用 Briefcase 构建重构项目，可将Python项目打包成可执行文件 msi、exe、dmg、deb等等
 
-# 最后
-PySide 和 PyQt 写的东西虽然运行的时候占用小，但是磁盘占用较大，这点比较可惜。
+# 😮‍💨最后
+PySide 和 PyQt 写的东西虽然运行的时候占用小，但是磁盘占用较大，打包的可执行文件也挺大的，这点比较可惜。
