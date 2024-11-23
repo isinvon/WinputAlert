@@ -60,8 +60,8 @@ git clone 源代码到本地
     briefcase dev
 
 ## 方式二（通过 msi 安装（msi即windows专用安装程序））
-
-在链接🔗xxx 中找到msi后缀的安装包下载后按指导安装即可
+系统支持: windows11、Windows10
+在🔗<a href="https://gitee.com/sinvon/WinputAlert/releases">WinputAlert安装包下载</a> 中找到msi后缀的安装包下载后按指导安装即可
 
 # ✈️原理
 
@@ -100,4 +100,4 @@ git clone 源代码到本地
 2. 使用 Briefcase 构建重构项目，可将Python项目打包成可执行文件 msi、exe、dmg、deb等等
 
 # 😮‍💨最后
-PySide 和 PyQt 写的东西虽然运行的时候占用小，但是磁盘占用较大，打包的可执行文件也挺大的，这点比较可惜。
+开始是想用electron开发，但是觉得大材小用，体积可能太大，然后用Thinter + Python + Pyinstaller开发了样品，但是Think对圆角支持不太好，Pyinstaller打包各种报错，所以用了briefcase + PySide6，写了差不多结束发现 PySide 和 PyQt 写的东西虽然运行的时候占用小，但是磁盘占用较大，打包的可执行文件也挺大的，主要是PyQt、PySide依赖的库都非常多，大概有几百个库吧，这点比较可惜。且由于我对PyQt生态不太熟悉，所以组件封装的代码可读性可能较差。
