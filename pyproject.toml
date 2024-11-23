@@ -115,6 +115,7 @@ flatpak_runtime_version = "6.7"
 flatpak_sdk = "org.kde.Sdk"
 
 [tool.briefcase.app.winputalert.windows]
+requires_admin = true # 提升权限，比如在 C:\Program Files 中操作文件，可以让程序以管理员权限启动
 requires = [
 ]
 
