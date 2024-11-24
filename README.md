@@ -27,7 +27,7 @@ WinputAlert 是一款基于 Python 开发的输入法状态切换提示的GUI应
 
 # 💬简单聊聊
 
-用过宏碁`Acer`电脑的小伙伴应该都知道，安装了宏碁的<font style="color:rgb(120, 188, 39);">QuickAccess</font><font style="color:rgb(120, 188, 39);"> </font> 这个东西之后，按下 `Caps` 大小写按键会显示大小写的切换，但是由于外国人都是用英文，所以就没有显示中文的功能，于是我就用 `Python`做了一个能提示大小写和中英文的软件，笔者使用的电脑屏幕缩放非常小，所以打字切换输入法的时候看状态栏的切换变化是很累眼的。但是又不想使用一直悬浮着的输入法状态栏，对于喜欢简洁的笔者来说过于碍眼。
+用过宏碁`Acer`电脑的小伙伴应该都知道，安装了宏碁的 <font style="color:rgb(120, 188, 39);">QuickAccess</font> 这个东西之后，按下 `Caps` 大小写按键会显示大小写的切换，但是由于外国人都是用英文，所以就没有显示中文的功能，于是我就用 `Python`做了一个能提示大小写和中英文的软件，笔者使用的电脑屏幕缩放非常小，所以打字切换输入法的时候看状态栏的切换变化是很累眼的。但是又不想使用一直悬浮着的输入法状态栏，对于喜欢简洁的笔者来说过于碍眼。
 
 另外部分 `Windows` 的用户因该遇到过按下输入法却发现输入法没有被切换的情况，曾经在贴吧有很多人反馈，所以做了这个软件，虽然不呢解决微软系统 cao dan 的 bug，但是通过这个软件切换输入法的时候能够直观看到切换状态，算是比较安心。
 
@@ -61,7 +61,7 @@ git clone 源代码到本地
 
 ## 方式二（通过 msi 安装（msi即windows专用安装程序））
 系统支持: windows11、Windows10
-在🔗<a href="https://gitee.com/sinvon/WinputAlert/releases">WinputAlert安装包下载</a> 中找到msi后缀的安装包下载后按指导安装即可
+在🔗<a href="https://github.com/isinvon/WinputAlert/releases">WinputAlert安装包下载</a> 中找到msi后缀的安装包下载后按指导安装即可
 
 # ✈️原理
 
@@ -100,4 +100,7 @@ git clone 源代码到本地
 2. 使用 Briefcase 构建重构项目，可将Python项目打包成可执行文件 msi、exe、dmg、deb等等
 
 # 😮‍💨最后
-开始是想用electron开发，但是觉得大材小用，体积可能太大，然后用Thinter + Python + Pyinstaller开发了样品，但是Think对圆角支持不太好，Pyinstaller打包各种报错，所以用了briefcase + PySide6，写了差不多结束发现 PySide 和 PyQt 写的东西虽然运行的时候占用小，但是磁盘占用较大，打包的可执行文件也挺大的，主要是PyQt、PySide依赖的库都非常多，大概有几百个库吧，这点比较可惜。且由于我对PyQt生态不太熟悉，所以组件封装的代码可读性可能较差。
+开始是想用electron开发，但是觉得大材小用，体积可能太大，然后用Thinter + Python + Pyinstaller开发了样品，但是Think对圆角支持不太好，Pyinstaller打包各种报错，所以用了briefcase + PySide6，写了差不多结束发现 PySide 和 PyQt 写的东西虽然运行的时候占用小，但是磁盘占用较大，打包的可执行文件也挺大的，主要是PyQt、PySide依赖的库都非常多，大概有几百个库吧，这点比较可惜。且由于我对PyQt生态不太熟悉，所以组件封装的代码可读性可能较差。程序运行占用如下：
+<div align="center">
+  <img src="./image/README/winputalert运行占用.png" alt="Clash" width="600" />
+</div>
